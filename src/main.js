@@ -12,11 +12,11 @@ import Vconsole from 'vconsole'
 NutUI.install(Vue);
 Vue.config.productionTip = false;
 Vue.prototype.$common = common;
-let vconsole = new Vconsole()
 //环境的切换
 if (process.env.NODE_ENV == 'development') {
 	//图片需要补全地址
 	Vue.prototype.$api = "http://122.112.206.233:8081/";
+	// let vconsole = new Vconsole()
 } else if (process.env.NODE_ENV == 'debug') {
 } else if (process.env.NODE_ENV == 'production') {
 } 

@@ -10,7 +10,7 @@ module.exports = {
 	/* 默认情况下，生成的静态资源在它们的文件名中包含了 hash 以便更好的控制缓存，你可以通过将这个选项设为 false 来关闭文件名哈希。(false的时候就是让原来的文件名不改变) */
 	filenameHashing: false,
 	/* 代码保存时进行eslint检测 */
-	lintOnSave: false,
+	lintOnSave: true,
 	/* webpack-dev-server 相关配置 */
 	devServer: {
 		// 禁用主机检查/用于解决内网穿透问题
@@ -25,10 +25,11 @@ module.exports = {
 		/* 使用代理 */
 		proxy: {
 			'/api': {
-				target: 'http://www.zjcoo.cn:8081',
+				target: 'http://192.168.199.215',
+				// target:'http://192.168.1.47',
 				changeOrigin: true,
 				pathRewrite: {
-					'^/api': '/'
+					'^/api': ''
 				}
 			},
 		},

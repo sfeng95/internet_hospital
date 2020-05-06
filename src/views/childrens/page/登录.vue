@@ -13,11 +13,11 @@
 				<label class="input">
 					<span>+86</span>
 					<input type="number" name="telephone" placeholder="请输入手机号" v-model="phone" />
-					<a @click="sendMsg" v-show="time > 60">获取验证码</a>
-					<a v-show="time <= 60">{{ time }}秒后重新发送</a>
 				</label>
 				<label class="input">
 					<input type="number" name="telephone" placeholder="请输入验证码" v-model="code" />
+					<a @click="sendMsg" v-show="time > 60">获取验证码</a>
+					<a v-show="time <= 60">{{ time }}秒后重新发送</a>
 				</label>
 				<p class="agreement">
 					登录代表同意
@@ -27,14 +27,14 @@
 					<span>登录</span>
 				</div>
 			</div>
-			<div class="wechat">
+			<!-- <div class="wechat">
 				<p>
 					<span>快速登录</span>
 				</p>
 				<div style="filter: grayscale(1)">
 					<img src="../../../assets/icons/weixin.png" width="40px" />
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </template>
@@ -51,7 +51,7 @@
 		methods: {
 			sendMsg() {
 				const that = this;
-				const phone_ = /^(13[0-9]|14[5|7]|15[0-9]|16[0-9]|17[0-9]|18[0-9])\d{8}$/;
+				const phone_ = /^(13[0-9]|14[5|7]|15[0-9]|16[0-9]|17[0-9]|18[0-9]|19[0-9])\d{8}$/;
 
 				if (that.phone == "" || that.phone == null) {
 					that.$toast.text("手机号不能为空");
@@ -61,13 +61,13 @@
 					that.$toast.text("手机号格式错误");
 					return;
 				}
-				this.$post(
-					'/hospital/send/message', {
-						phone: that.phone,
-						type: 1
+				this.$get(
+					'/users/login/getValidaCode', {
+						mobile: that.phone,
 					}
 				).then(function(res) {
-					if (res.code) {
+					console.info(res)
+					if (res.code == 200) {
 						that.$toast.text("验证码发送成功");
 						that.time--;
 						that.dsq = setInterval(() => {
@@ -91,41 +91,34 @@
 					that.$toast.text("验证码不能为空");
 					return;
 				}
-
-				this.$post("/hospital/login", {
-						telephone: that.phone,
-						code: that.code,
-						password: ""
+				that.$post("/users/patUser/login", {
+						mobile: that.phone,
+						userType: 2,
+						validaCode: that.code,
 					})
 					.then(function(res) {
-						console.log(res);
-						if (res.code) {
-							localStorage.setItem("token", res.token);
-							that.$store.commit("Info/SET_STATE", {
-								telephone: that.phone
-							});
-							that.$post("/hospital/user/check", {
-									token: res.token
-								})
-								.then(function(res) {
-									console.log(res);
-									if (res.code) {
-										localStorage.setItem("is_new", res.is_new);
-										localStorage.setItem("is_patient", res.is_patient);
-									}
-								})
-								.catch(function(res) {
-									console.log(res);
+						if (res.code == 200) {
+							localStorage.setItem("token", res.data);
+							that.$get('/users/patient/findInfo',
+								{
+									'myToken':res.data
+								}
+							)
+							.then(function(res) {
+								if(res.data.realName == null || res.data.idCard == null || res.data.sex == null){
+									sessionStorage.setItem('isInfo',false)
+								}else{
+									sessionStorage.setItem('isInfo',true)
+									that.$store.commit("Info/SET_STATE",res.data);
+								}
+								that.$router.replace({
+									name: "index"
 								});
-							that.$router.push({
-								name: "mine"
-							});
+							})
+						} else {
+							that.$toast.text(res.message);
 						}
 					})
-					.catch(function(res) {
-						// 请求失败处理
-						console.log(res);
-					});
 			}
 		}
 	};
@@ -281,7 +274,7 @@
 	}
 
 	.input {
-		a:nth-child(3) {
+		a:nth-child(2) {
 			color: #5a75f6;
 			padding-left: 20px;
 		}

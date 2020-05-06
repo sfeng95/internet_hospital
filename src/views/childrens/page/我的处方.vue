@@ -5,6 +5,7 @@
 		    :leftShow="true" 
 		    :rightShow="false"
 		>我的处方</nut-navbar>
+		
 		<div class="list">
 			<ul class="item" v-for="item of 30">
 				<li>
@@ -23,11 +24,11 @@
 				</li>
 				<li>
 					<p>诊断:<span>皮炎,皮炎皮炎皮炎皮炎皮炎皮炎皮炎</span></p>
-					<router-link to="">
-						<button>查看详情</button>
-					</router-link>
 				</li>
 				<li class="购药">
+					<span>
+						2020-1-1 20：00：00
+					</span>
 					<router-link to="">
 						<button>线上购药</button>
 					</router-link>
@@ -60,29 +61,35 @@ export default{
 	box-sizing: border-box;
 }
 .item{
-	padding:15px 10px;
 	background-color:#fff;
 	margin-bottom: 12px;
 	border-radius: 5px;
+	overflow: hidden;
 }
 li{
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 10px;
+	align-items: center;
+	padding:15px 10px;
+}
+li:first-of-type{
+	background: #5A75F6;
 }
 li:last-of-type{
 	margin: 0;
 }
 .user{
+	display: flex;
+	align-items: center;
 	font-size: 14px;
-	color:#353535;
+	color:#fff;
 }
 li>span{
-	font-size: 11px;
+	font-size: 12px;
 	color:#5a5a5a;
 }
 .ddkcf{
-	color:#ff2400;
+	color:#fff;
 }
 li>p{
 	font-size: 12px;
@@ -103,7 +110,6 @@ li button{
 .购药{
 	overflow: hidden;
 	position: relative;
-	padding-top: 15px;
 }
 .购药:after{
 	content:'';
@@ -117,11 +123,11 @@ li button{
 }
 .购药 button{
 	width: 70px;
-	height: 23px;
+	height: 25px;
 	background: #5a75f6;
 	border-radius: 12px;
 	color: #fff;
-	font-size: 11px;
+	font-size: 12px;
 	border:none;
 }
 </style>

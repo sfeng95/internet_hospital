@@ -42,11 +42,12 @@ export default {
       background-color: #ebecf0;
       border-radius: 15px;
       border: none;
+	  font-size: 15px;
       width: calc(100% - 38px);
       box-sizing: border-box;
       padding: 0 31px;
     }
-    i {
+    i{
       padding: 0 5px;
       img {
         padding-left: 10px;

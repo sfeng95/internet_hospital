@@ -1,33 +1,54 @@
 <template>
 	<div class="doctorInfo">
 		<div class="头像">
-			<img src="" alt="" width="100%">
+			<img :src="headImage" alt="" width="100%">
 		</div>
-		<div>
+		<div style="width: 100%;">
 			<div class="Infotop">
 				<div>
 					<div class="zhiwei">
-						<h4>xx医生</h4><span>副主任医师</span>
+						<h4>{{realName}}</h4><span>{{qualifications}}</span>
 					</div>
-					<p>24小时内交流不限次数</p>
 				</div>
-				<div>
-					<button><i></i>咨询</button>
+				<div v-if="showButton">
+					<router-link tag="button" :to="link" ><i></i>坐诊中</router-link>
 				</div>
 			</div>
-			<div class="Infobottom">
+			<div class="Infobottom" v-if="showInfo">
 				<p class="gl">接诊率:<span>99%</span>好评率:<span>99%</span>问诊量:<span>123123</span></p>
-				<p class="good_at">擅长爱神的箭卡号就是等哈就是大家看见肯定会阿贾克斯电话卡后就开始电话卡就</p>
+				<p class="good_at">{{introduce}}</p>
 			</div>
+			<slot></slot>
 		</div>
 	</div>
 </template>
 
 <script>
 	export default {
-		data() {
-			return {
-
+		props:{
+			headImage:{
+				type:String,
+				default:''
+			},
+			showButton:{
+				type:Boolean,
+				default:true
+			},
+			showInfo:{
+				type:Boolean,
+				default:true
+			},
+			realName:{
+				type:String
+			},
+			qualifications:{
+				type:String
+			},
+			introduce:{
+				type:String
+			},
+			link:{
+				default:''
 			}
 		}
 	}
@@ -37,7 +58,7 @@
 	.doctorInfo {
 		background: #fff;
 		display: flex;
-		padding: 20px 15px;
+		padding:20px;
 		border-bottom: 1px solid #efefef;
 
 		.头像 {
@@ -47,6 +68,7 @@
 			border-radius: 50%;
 			flex-shrink: 0;
 			margin-right: 15px;
+			overflow: hidden;
 		}
 
 		.Infotop {
@@ -56,14 +78,12 @@
 			.zhiwei {
 				display: flex;
 				align-items: flex-end;
-
 				h4 {
 					font-size: 15px;
 					font-weight: normal;
 					color: #0e0e0e;
 					margin-right: 5px;
 				}
-
 				span {
 					font-size: 12px;
 					font-weight: normal;
@@ -100,7 +120,7 @@
 		}
 		.Infobottom{
 			.gl{
-				font-size: 10px;
+				font-size: 11px;
 				font-weight: normal;
 				color: #959595;
 				padding: 5px 0;

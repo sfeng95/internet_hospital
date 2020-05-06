@@ -1,6 +1,6 @@
 <template>
 	<div class="知情同意书" v-if="show">
-		<nut-navbar @on-click-back="$common.back" :rightShow="false">知情同意书</nut-navbar>
+		<!-- <nut-navbar @on-click-back="$common.back" :rightShow="false">知情同意书</nut-navbar> -->
 		<div class="content">
 			<h5>
 				尊敬的患者朋友：
@@ -47,55 +47,60 @@
 			<p>8.互联网诊疗发生的诊疗检验类费用如需退款，需到实体医院的门诊部处理退费。患者选择药品配送到指定地点服务时，非质量原因不予退换。患者自主选择到药店取药时，如患者在医生开具处方及药品订单生成之日起72小时内未取药可退款同时此次诊疗处方失效，不可再次使用。退款需要在患者自主选择的实体药店领取。故在支付前请确认需求，以免退款带来不便。
 				阅读完以上内容，如若没有异议，请认真遵守，感谢您对我院各项工作的理解和配合，衷心祝您早日康复！
 			</p>
+			<p class='button'>
 				<button @click="close()">我已阅读并同意</button>
+			</p>
 		</div>
 	</div>
 </template>
 
 <script>
 	export default {
-		data(){
+		data() {
 			return {
-				show:false
+				show: false
 			}
 		},
-		created(){
-			if(sessionStorage.getItem('zhiqingtongyishu')!='true'){
-				this.show=true
-			}else{
-				this.show=false
+		created() {
+			if (sessionStorage.getItem('zhiqingtongyishu') != 'true') {
+				this.show = true
+			} else {
+				this.show = false
 			}
 		},
-		methods:{
-			close(){
-				this.show=false
-				sessionStorage.setItem('zhiqingtongyishu',true)
+		methods: {
+			close() {
+				this.show = false
+				sessionStorage.setItem('zhiqingtongyishu', true)
 			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	.知情同意书{
+	.知情同意书 {
 		position: fixed;
 		width: 100%;
-		background:#f5f5f5;
+		background: #f5f5f5;
 		z-index: 995;
 		height: 100%;
-		display:flex;
+		display: flex;
 		flex-direction: column;
-		.content{
+
+		.content {
 			height: 100%;
 			overflow-y: auto;
+			padding-bottom: 70px;
 		}
 	}
+
 	h5,
 	p {
 		padding: 0 15px;
 	}
 
 	h5 {
-		font-size: 15px;
+		font-size: 17px;
 		font-weight: normal;
 		line-height: 34px;
 		letter-spacing: 0px;
@@ -104,25 +109,30 @@
 
 	p {
 		text-indent: 2em;
-		font-size: 12px;
+		font-size: 14px;
 		font-weight: normal;
 		line-height: 24px;
 		letter-spacing: 0px;
 		color: #828282;
 	}
-	
-	button{
-		margin:50px auto 20px auto;
-		display: block;
-		width: 90%;
-		height: 45px;
-		background-color: #5a75f6;
-		border-radius: 23px;
-		font-size: 15px;
-		font-weight: normal;
-		letter-spacing: 0px;
-		color: #ffffff;
-		border: none;
+
+	.button {
+		position: fixed;
+		bottom: 0;
+		background: #fff;
+		width: 100%;
+		padding: 5px 5%;
+		button {
+			display: block;
+			width: 90%;
+			height: 45px;
+			background-color: #5a75f6;
+			border-radius: 23px;
+			font-size: 16px;
+			font-weight: normal;
+			letter-spacing: 0px;
+			color: #ffffff;
+			border: none;
+		}
 	}
-	
 </style>

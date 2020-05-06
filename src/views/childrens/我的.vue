@@ -8,25 +8,25 @@
 						<img :src="Info.headshot" width="100%" alt="" />
 					</div>
 					<div class="box_info">
-						<p>{{ Info.user_name }}</p>
+						<p>{{ Info.realName }}</p>
 						<span>{{ Info.age }}岁</span>
 					</div>
 				</div>
-				<div class="认证">
+				<!-- <div class="认证">
 					{{ Info.id_card != '' ? '已认证' : '未认证' }}<span>></span>
-				</div>
+				</div> -->
 			</div>
 		</router-link>
 
 		<div class="主内容">
 			<div class="write 主菜单">
-				<router-link to="">
+				<router-link to="/wdwz">
 					<div>
 						<img src="../../assets/images/wdwz.png" alt="" />
 						我的问诊
 					</div>
 				</router-link>
-				<router-link :to="{name:'wdcf'}">
+				<router-link to="/wdcf">
 					<div>
 						<img src="../../assets/images/wdcf.png" alt="" />
 						我的处方
@@ -50,33 +50,45 @@
 			<div class="write 副菜单">
 				<h5>常用功能</h5>
 				<div>
-					<router-link to="">
+					<router-link to="/wdsc">
 						<div>
-							<img src="../../assets/icons/wdgh.png" alt="" />
-							我的挂号
+							<img src="@/assets/icons/mine/wdsc.png" alt="" />
+							我的收藏
 						</div>
 					</router-link>
-					<router-link to="">
+					<router-link to="/jzrgl">
 						<div>
-							<img src="../../assets/icons/jzrgl.png" alt="" />
+							<img src="@/assets/icons/jzrgl.png" alt="" />
 							就诊人管理
 						</div>
 					</router-link>
 					<router-link to="">
 						<div>
-							<img src="../../assets/icons/dzgl.png" alt="" />
+							<img src="@/assets/icons/mine/dzgl.png" alt="" />
 							地址管理
+						</div>
+					</router-link>
+					<router-link to="/xxts">
+						<div>
+							<img src="@/assets/icons/mine/wdxx.png" alt="" />
+							我的消息
+						</div>
+					</router-link>
+					<router-link to="/dzbl">
+						<div>
+							<img src="@/assets/icons/mine/dzbl.png" alt="" />
+							电子病例
 						</div>
 					</router-link>
 					<router-link to="">
 						<div>
-							<img src="../../assets/icons/wdxx.png" alt="" />
-							我的信息
+							<img src="@/assets/icons/mine/bzzx.png" alt="" />
+							帮助中心
 						</div>
 					</router-link>
-					<router-link to="">
-						<div @click="exit">
-							<img src="../../assets/icons/tcdl.png" alt="" />
+					<router-link to="" @click.native="exit">
+						<div>
+							<img src="@/assets/icons/mine/tc.png" alt="" />
 							退出登录
 						</div>
 					</router-link>
@@ -93,7 +105,6 @@
 
 			}
 		},
-
 		computed: {
 			Info() {
 				return this.$store.state.Info;
@@ -104,8 +115,13 @@
 		},
 		methods: {
 			exit() {
-				this.$router.push('index')
 				localStorage.removeItem('token');
+				this.$router.replace('/login')
+				// this.$get('/users/patUser/loginOut',{
+				// 	mytoken:localStorage.getItem('token')
+				// }).then(res=>{
+				// 	console.info(res)
+				// })
 			}
 		}
 		// console.info(this.$route.params.id);
@@ -191,7 +207,6 @@
 
 		.副菜单 {
 			h5 {
-				font-family: HiraginoSansGB-W3;
 				font-size: 14px;
 				font-weight: normal;
 				font-stretch: normal;
@@ -203,7 +218,6 @@
 
 			div {
 				display: flex;
-				justify-content: space-between;
 				flex-wrap: wrap;
 				width: 100%;
 				padding: 10px 0;
@@ -261,7 +275,7 @@
 			.box_img {
 				width: 56px;
 				height: 56px;
-				background: red;
+				background: rgba(0,0,0,.5);
 				overflow: hidden;
 				border-radius: 50%;
 			}
